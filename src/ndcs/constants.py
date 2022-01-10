@@ -1,6 +1,7 @@
 import os
 
-ROOT_DATA_DIR = os.path.join(os.path.dirname(__file__), "../data")
+ROOT_DIR = os.path.join(os.path.dirname(__file__), "..", "..")
+ROOT_DATA_DIR = os.path.join(ROOT_DIR, "data")
 RAW_DATA_DIR = os.path.join(ROOT_DATA_DIR, "raw")
 PROCESSED_DATA_DIR = os.path.join(ROOT_DATA_DIR, "processed")
 PUBLIC_DATA_DIR = os.path.join(ROOT_DATA_DIR, "public")
