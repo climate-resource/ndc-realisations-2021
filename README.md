@@ -2,6 +2,9 @@
 
 Code and data related to `Realisation of Paris Agreement pledges may limit warming to just below 2°C`
 
+The climate quantification runs MAGICCv7.5.4 using the scenario files created in
+this repository.
+
 
 The outputs from this repo are used to produce the interactive NDC factsheets as well
 as the NDC quantifications. There are a few steps involved in extracting timeseries 
