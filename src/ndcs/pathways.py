@@ -190,6 +190,17 @@ class NDCCruncher:
         global_emms["date"] = str(dt)
         global_emms["global_extension"] = "n/a"
         global_emms["exclude_hot_air"] = self.exclude_hot_air
+
+        # Create a unique_scenario_name
+        uniq_vars = [
+            "pathway_id",
+            "ambition",
+            "conditionality",
+            "country_extension",
+            "exclude_hot_air",
+        ]
+        scenario = "__".join([global_emms.get_unique_meta(c, True) for c in uniq_vars])
+        global_emms["scenario"] = scenario
         self.output_db.save(global_emms)
 
         # Dump selected countries to json

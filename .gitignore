@@ -1,5 +1,8 @@
 # Large
 data/processed/global_emissions_pathways
+data/raw/sr15-scenarios
+data/processed/sr15_data.csv
+data/raw/rcmip
 
 figures
 
