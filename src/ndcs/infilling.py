@@ -7,11 +7,136 @@ from pyam import IamDataFrame
 import silicone.time_projectors
 import scmdata
 from silicone.database_crunchers import TimeDepRatio as BaseTimeDepRatio
+from silicone.database_crunchers.base import _DatabaseCruncher
+from typing import List
 
 from .constants import LEAD
 
 
 logger = logging.getLogger(__name__)
+
+
+def _determine_quantile(
+    quantile_data: scmdata.ScmRun, values: scmdata.ScmRun
+) -> list[float]:
+    assert quantile_data.shape[1] == 1, "More than one timestep present"
+    assert values.shape[1] == 1, "More than one timestep present"
+
+    quantiles = quantile_data.timeseries().squeeze()
+    quantiles.index = quantiles.index.get_level_values("quantile")
+    quantiles = quantiles.sort_index()
+
+    # linear interpolation
+    res = np.interp(
+        np.atleast_1d(values.values.squeeze()), quantiles.values, quantiles.index
+    )
+
+    assert len(res) == len(values)
+    return res
+
+
+def _lookup_quantile(lookup_data: scmdata.ScmRun, quantiles: List[float]):
+    assert lookup_data.shape[1] == 1, "More than one timestep present"
+
+    lookup = lookup_data.timeseries().squeeze()
+    lookup.index = lookup.index.get_level_values("quantile")
+    lookup = lookup.sort_index()
+
+    # linear interpolation
+    res = np.interp(quantiles, lookup.index, lookup.values)
+
+    assert len(res) == len(quantiles)
+    return res
+
+
+class EqualQuantileWalk_MM(_DatabaseCruncher):
+    def __init__(self, db, gases_to_fill):
+        super(EqualQuantileWalk_MM, self).__init__(db)
+        self.gases_to_fill = gases_to_fill
+        self._prepare_percentiles()
+
+    def _prepare_percentiles(self):
+        # Prepare by calculating the ghg's corresponding the 1st, 2nd, ... quantile of each target gas
+        self._db_quantiles = scmdata.ScmRun(self._db).quantiles_over(
+            ("scenario", "model"), quantiles=np.arange(0.01, 1, 0.01)
+        )
+        self._db_quantiles["scenario"] = "Unknown"
+        self._db_quantiles["model"] = "Unknown"
+        self._db_quantiles = scmdata.ScmRun(self._db_quantiles)
+
+        # Calculate bottom up GHGs
+        self._db_ghg = calc_ghg(self._db_quantiles, self.gases_to_fill)
+
+    def derive_relationship(
+        self, variable_follower, variable_leaders, include_quantile=False, **kwargs
+    ):
+        lookup_data = self._db_quantiles.filter(variable=variable_follower)
+        if lookup_data.empty:
+            error_msg = f"No data in the database for {variable_follower}"
+            raise ValueError(error_msg)
+
+        data_unit = lookup_data.get_unique_meta("unit", True)
+
+        def filler(in_iamdf):
+            """
+            Filler function derived from :obj:`TimeDepRatio`.
+            Parameters
+            ----------
+            in_iamdf : :obj:`pyam.IamDataFrame`
+                Input data to fill data in
+            Returns
+            -------
+            :obj:`pyam.IamDataFrame`
+                Filled-in data (without original source data)
+            Raises
+            ------
+            ValueError
+                The key year for filling is not in ``in_iamdf``.
+            """
+
+            in_scmrun = scmdata.ScmRun(in_iamdf)
+
+            lead_var = in_scmrun.filter(variable=variable_leaders)
+            assert (
+                lead_var["unit"].nunique() == 1
+            ), "There are multiple units for the lead variable."
+
+            # Only handles annual data currently
+            years_needed = set(in_scmrun["year"])
+            if any([k not in set(self._db_quantiles["year"]) for k in years_needed]):
+                error_msg = (
+                    "Not all required timepoints are in the data for "
+                    "the lead gas ({})".format(variable_leaders[0])
+                )
+                raise ValueError(error_msg)
+
+            output_ts = lead_var.timeseries(time_axis="year").copy()
+            quantiles_ts = lead_var.timeseries(time_axis="year").copy()
+
+            for year in lead_var["year"]:
+                quantile = _determine_quantile(
+                    self._db_ghg.filter(year=year), lead_var.filter(year=year)
+                )
+                quantiles_ts.loc[:, year] = quantile
+                output_ts.loc[:, year] = _lookup_quantile(
+                    lookup_data.filter(year=year), quantile
+                )
+
+            output_ts.reset_index(inplace=True)
+            output_ts["variable"] = variable_follower
+            output_ts["unit"] = data_unit
+
+            quantiles_ts.reset_index(inplace=True)
+            quantiles_ts["variable"] = variable_follower + "|Quantile"
+            quantiles_ts["unit"] = "unitless"
+
+            output = scmdata.ScmRun(output_ts)
+
+            if include_quantile:
+                output = output.append(scmdata.ScmRun(quantiles_ts))
+            return output.to_iamdataframe()
+
+        return filler
 
 
 class TimeDepRatio(BaseTimeDepRatio):
