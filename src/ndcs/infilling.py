@@ -50,9 +50,9 @@ def _lookup_quantile(lookup_data: scmdata.ScmRun, quantiles: List[float]):
 
 
 class EqualQuantileWalk_MM(_DatabaseCruncher):
-    def __init__(self, db, gases_to_fill):
+    def __init__(self, db, bottom_up_gases):
         super(EqualQuantileWalk_MM, self).__init__(db)
-        self.gases_to_fill = gases_to_fill
+        self.bottom_up_gases = bottom_up_gases
         self._prepare_percentiles()
 
     def _prepare_percentiles(self):
@@ -65,7 +65,7 @@ class EqualQuantileWalk_MM(_DatabaseCruncher):
         self._db_quantiles = scmdata.ScmRun(self._db_quantiles)
 
         # Calculate bottom up GHGs
-        self._db_ghg = calc_ghg(self._db_quantiles, self.gases_to_fill)
+        self._db_ghg = calc_ghg(self._db_quantiles, self.bottom_up_gases)
 
     def derive_relationship(
         self, variable_follower, variable_leaders, include_quantile=False, **kwargs
