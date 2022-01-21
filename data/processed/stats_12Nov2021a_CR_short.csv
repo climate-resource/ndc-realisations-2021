@@ -1,6 +1,7 @@
 scenario,Category,Category_name,label,ambition,conditionality,country_extension,exclude_hot_air,methane_pledges,Exceedance Probability 1.5C ,Exceedance Probability 2.0C ,Exceedance Probability 2.5C ,Exceedance Probability 3.0C ,p5 peak warming,median peak warming,p95 peak warming,p5 year of peak warming,median year of peak warming,p95 year of peak warming,p5 warming in 2100,median warming in 2100,p95 warming in 2100
 2021-11-09_1__high__C__SSP1BL__exclude,C4,C4: Below 2°C,A,high,C,SSP1BL,exclude,,0.898,0.422,0.123,0.02,1.406,1.919,2.795,2049,2082,2100,1.33,1.879,2.795
 2021-11-09_1__high__C__constant__exclude,C4,C4: Below 2°C,A-constant,high,C,constant,exclude,,0.887,0.362,0.1,0.013,1.39,1.872,2.717,2048,2069,2100,1.259,1.794,2.711
+2021-11-09_1__high__C__SSP1BL-constant2050__exclude,C5,C5: Below 2.5°C,A-constant2050,high,C,SSP1BL-constant2050,exclude,,0.963,0.572,0.195,0.057,1.524,2.098,3.036,2100,2100,2100,1.524,2.098,3.036
 2021-11-09_1__high__C__SSP1BL__include,C4,C4: Below 2°C,A-hot air,high,C,SSP1BL,include,,0.91,0.452,0.135,0.03,1.423,1.951,2.851,2049,2082,2100,1.357,1.917,2.851
 2021-11-09_1__high__C__rate__exclude,C4,C4: Below 2°C,A-rate,high,C,rate,exclude,,0.908,0.453,0.135,0.03,1.423,1.951,2.854,2049,2093,2100,1.359,1.919,2.853
 2021-11-09_1__low__U__SSP1BL__exclude,C5,C5: Below 2.5°C,B,low,U,SSP1BL,exclude,,0.935,0.523,0.17,0.05,1.474,2.032,2.998,2059,2094,2100,1.429,2.021,2.998
