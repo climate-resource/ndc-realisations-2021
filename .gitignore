@@ -7,10 +7,8 @@ data/processed/sr15_data.csv
 data/raw/rcmip
 data/raw/iea
 
-figures
-
 *.zip
-*.pdf
+#*.pdf
 *.png
 *.ai
 
@@ -35,6 +33,7 @@ __pycache__/
 
 # Office caches
 ~$*
+.~*
 
 # C extensions
 *.so
