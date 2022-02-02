@@ -1,0 +1,18 @@
+scenario,Category,Category_name,label,ambition,conditionality,country_extension,exclude_hot_air,methane_pledges,Exceedance Probability 1.5C ,Exceedance Probability 2.0C ,Exceedance Probability 2.5C ,Exceedance Probability 3.0C ,p5 peak warming,median peak warming,p95 peak warming,p5 year of peak warming,median year of peak warming,p95 year of peak warming,p5 warming in 2100,median warming in 2100,p95 warming in 2100
+2021-11-09_1__high__C__SSP1BL__exclude,C4,C4: Below 2°C,A,high,C,SSP1BL,exclude,,0.898,0.422,0.123,0.02,1.406,1.919,2.795,2049,2082,2100,1.33,1.879,2.795
+2021-11-09_1__high__C__constant__exclude,C4,C4: Below 2°C,A-constant,high,C,constant,exclude,,0.887,0.362,0.1,0.013,1.39,1.872,2.717,2048,2069,2100,1.259,1.794,2.711
+2021-11-09_1__high__C__SSP1BL-constant2050__exclude,C5,C5: Below 2.5°C,A-constant2050,high,C,SSP1BL-constant2050,exclude,,0.963,0.572,0.195,0.057,1.524,2.098,3.036,2100,2100,2100,1.524,2.098,3.036
+2021-11-09_1__high__C__SSP1BL__include,C4,C4: Below 2°C,A-hot air,high,C,SSP1BL,include,,0.91,0.452,0.135,0.03,1.423,1.951,2.851,2049,2082,2100,1.357,1.917,2.851
+2021-11-09_1__high__C__rate__exclude,C4,C4: Below 2°C,A-rate,high,C,rate,exclude,,0.908,0.453,0.135,0.03,1.423,1.951,2.854,2049,2093,2100,1.359,1.919,2.853
+2021-11-09_1__low__U__SSP1BL__exclude,C5,C5: Below 2.5°C,B,low,U,SSP1BL,exclude,,0.935,0.523,0.17,0.05,1.474,2.032,2.998,2059,2094,2100,1.429,2.021,2.998
+2021-11-09_1__high__C__2030__exclude,C5,C5: Below 2.5°C,a,high,C,2030,exclude,,0.975,0.693,0.28,0.108,1.609,2.238,3.305,2093,2100,2100,1.592,2.237,3.305
+2021-11-09_1__high__C__2030__include,C5,C5: Below 2.5°C,b,high,C,2030,include,,0.99,0.788,0.388,0.135,1.698,2.362,3.504,2093,2100,2100,1.683,2.362,3.504
+2021-11-09_1__low__C__2030__exclude,C5,C5: Below 2.5°C,c,low,C,2030,exclude,,0.992,0.795,0.412,0.145,1.718,2.389,3.541,2093,2100,2100,1.703,2.389,3.541
+2021-11-09_1__low__C__2030__include,C5,C5: Below 2.5°C,d,low,C,2030,include,,0.993,0.823,0.465,0.172,1.764,2.455,3.638,2094,2100,2100,1.758,2.455,3.638
+2021-11-09_1__high__U__2030__exclude,C6,C6: Below 3.0°C,e,high,U,2030,exclude,,0.995,0.865,0.517,0.202,1.812,2.523,3.723,2100,2100,2100,1.812,2.523,3.723
+2021-11-09_1__low__U__2030__exclude,C6,C6: Below 3.0°C,f,low,U,2030,exclude,,1.0,0.94,0.672,0.312,1.979,2.738,4.029,2100,2100,2100,1.979,2.738,4.029
+2021-11-09_1__high__U__2030__include,C6,C6: Below 3.0°C,g,high,U,2030,include,,1.0,0.975,0.777,0.427,2.116,2.904,4.263,2100,2100,2100,2.116,2.904,4.263
+2021-11-09_1__low__U__2030__include,C7,C7: Below 4.0°C,h,low,U,2030,include,,1.0,0.983,0.818,0.507,2.196,3.005,4.394,2100,2100,2100,2.196,3.005,4.394
+2021-11-03_1__high__C__SSP1BL__exclude__fullCH4,C4,C4: Below 2°C,m,high,C,SSP1BL,exclude,fullCH4,0.892,0.403,0.123,0.018,1.385,1.902,2.778,2049,2082,2100,1.322,1.868,2.778
+2021-11-03_1__high__C__SSP1BL__exclude__conditionalCH4,C4,C4: Below 2°C,n,high,C,SSP1BL,exclude,conditionalCH4,0.895,0.415,0.123,0.018,1.399,1.915,2.791,2049,2082,2100,1.328,1.876,2.79
+2021-11-03_1__high__C__SSP1BL__exclude__unconditionalCH4,C4,C4: Below 2°C,o,high,C,SSP1BL,exclude,unconditionalCH4,0.893,0.412,0.123,0.018,1.396,1.912,2.787,2049,2082,2100,1.326,1.874,2.786
